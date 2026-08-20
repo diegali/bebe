@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prode del Bebé</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+  <div class="wrap">
+
+    <!-- ENCABEZADO -->
+    <header class="hero">
+      <div class="eyebrow">Prode del bebé</div>
+      <h1>¿Quién llegará primero?</h1>
+      <p>Anto y Santi decidieron no saber el sexo hasta el nacimiento. Vos sí podés apostar. 😏</p>
+      <div class="lock-badge">🔒 Todo permanece oculto hasta que nazca</div>
+    </header>
+
+    <!-- FORMULARIO DE PREDICCIÓN (se muestra si el usuario todavía no votó) -->
+    <section class="card" id="formCard">
+      <h3>Hacé tu predicción</h3>
+
+      <div class="section-title">Lo importante (suma puntos)</div>
+
+      <label for="votanteNombre">Tu nombre</label>
+      <input type="text" id="votanteNombre" placeholder="Nombre y apellido">
+
+      <label>¿Varón o mujer?</label>
+      <div class="toggle-row" id="toggleSexo">
+        <button type="button" class="toggle" data-sexo="Varón">👦 Varón</button>
+        <button type="button" class="toggle" data-sexo="Mujer">👧 Mujer</button>
+      </div>
+
+      <label for="fechaGuess">Fecha de nacimiento</label>
+      <input type="date" id="fechaGuess">
+
+      <label for="horaGuess">Hora aproximada</label>
+      <input type="time" id="horaGuess">
+
+      <label for="pesoGuess">Peso al nacer (kg)</label>
+      <div class="slider-row">
+        <input type="range" id="pesoGuess" min="2.0" max="4.8" step="0.05" value="3.3">
+        <div class="slider-val" id="pesoVal">3.30 kg</div>
+      </div>
+
+      <label for="alturaGuess">Altura al nacer (cm)</label>
+      <div class="slider-row">
+        <input type="range" id="alturaGuess" min="42" max="56" step="0.5" value="49">
+        <div class="slider-val" id="alturaVal">49 cm</div>
+      </div>
+
+      <div class="section-title">Apuestas graciosas (opcional, no suman puntos)</div>
+
+      <label>¿A quién se va a parecer?</label>
+      <div class="toggle-row" id="toggleParecido">
+        <button type="button" class="toggle small" data-parecido="Mamá">Mamá</button>
+        <button type="button" class="toggle small" data-parecido="Papá">Papá</button>
+        <button type="button" class="toggle small" data-parecido="Ambos">Ambos</button>
+      </div>
+
+      <label>¿Va a nacer con mucho pelo?</label>
+      <div class="toggle-row" id="togglePelo">
+        <button type="button" class="toggle small" data-pelo="Sí">Sí</button>
+        <button type="button" class="toggle small" data-pelo="No">No</button>
+      </div>
+
+      <button class="primary" id="btnVotar">Guardar mi predicción</button>
+      <div class="msg" id="formMsg"></div>
+    </section>
+
+    <!-- ESPERANDO (se muestra si el usuario ya votó y todavía no nació) -->
+    <section class="card hidden" id="waitingCard">
+      <div class="waiting">
+        <div class="big-emoji">🤰</div>
+        <h3>Tu predicción quedó guardada</h3>
+        <p>Nadie puede ver los resultados todavía — ni siquiera mamá y papá.<br>Ahora solo queda esperar... 👶</p>
+      </div>
+    </section>
+
+    <!-- REVELACIÓN (se muestra cuando ya se cargó el resultado real) -->
+    <section class="card hidden" id="revealCard">
+      <div class="reveal-hero">
+        <div class="eyebrow">¡Ya nació! 🎉</div>
+        <div class="sexo-big" id="revealSexo">-</div>
+        <div class="detalle" id="revealDetalle"></div>
+      </div>
+
+      <div class="podio" id="podio"></div>
+      <div class="rank-list" id="rankList"></div>
+
+      <div class="section-title">Apuestas graciosas — lo que votó la mayoría</div>
+      <div class="fun-facts" id="funFacts"></div>
+    </section>
+
+    <!-- PANEL ADMIN (papás cargan el resultado real) -->
+    <button class="reveal-trigger" id="btnAbrirAdmin">Soy papá/mamá — cargar nacimiento</button>
+    <section class="card hidden" id="adminCard">
+      <h3>Cargar datos reales</h3>
+
+      <label for="pinInput">PIN</label>
+      <div class="pin-box">
+        <input type="text" id="pinInput" placeholder="PIN">
+        <button id="btnPin">Entrar</button>
+      </div>
+
+      <div id="adminForm" class="hidden">
+        <label>Sexo</label>
+        <div class="toggle-row" id="toggleSexoReal">
+          <button type="button" class="toggle" data-sexo-real="Varón">👦 Varón</button>
+          <button type="button" class="toggle" data-sexo-real="Mujer">👧 Mujer</button>
+        </div>
+
+        <label for="fechaReal">Fecha de nacimiento</label>
+        <input type="date" id="fechaReal">
+
+        <label for="horaReal">Hora</label>
+        <input type="time" id="horaReal">
+
+        <label for="pesoReal">Peso (kg)</label>
+        <input type="text" id="pesoReal" placeholder="3.30">
+
+        <label for="alturaReal">Altura (cm)</label>
+        <input type="text" id="alturaReal" placeholder="49">
+
+        <button class="primary" id="btnGuardarReal">Guardar y revelar</button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Firebase (SDK modular, imports con URL completa de gstatic) -->
+  <script type="module" src="js/firebase-config.js"></script>
+  <script type="module" src="js/prode.js"></script>
+  <script type="module" src="js/reveal.js"></script>
+
+</body>
+
+</html>
