@@ -398,3 +398,54 @@ button.primary:disabled {
 .hidden {
     display: none !important;
 }
+
+.participantes {
+    background: var(--card);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.participantes .muted {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin: 0 0 10px;
+}
+
+.lista-nombres {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.lista-nombres li {
+    background: var(--bg);
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 13px;
+}
+
+.btn-secundario {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 16px;
+    background: transparent;
+    border: 1px solid var(--text-dim);
+    border-radius: 10px;
+    color: var(--text-dim);
+    font-size: 14px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+}
+
+.btn-secundario:hover {
+    border-color: var(--error);
+    color: var(--error);
+}

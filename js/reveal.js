@@ -29,6 +29,22 @@ function calcularPuntaje(pred, real) {
     return pts;
 }
 
+async function mostrarParticipantes() {
+    const snap = await getDocs(collection(db, "predicciones"));
+    const nombres = snap.docs.map(d => d.data().nombre);
+    const cont = document.getElementById("listaParticipantes");
+    if (!nombres.length) {
+        cont.innerHTML = "<p class='muted'>Todavía no votó nadie.</p>";
+        return;
+    }
+    cont.innerHTML = `
+    <p class="muted">${nombres.length} persona${nombres.length === 1 ? "" : "s"} ya predijeron:</p>
+    <ul class="lista-nombres">
+      ${nombres.map(n => `<li>${n}</li>`).join("")}
+    </ul>
+  `;
+}
+
 // ===== Panel admin: abrir / validar PIN =====
 document.getElementById("btnAbrirAdmin").addEventListener("click", () => {
     document.getElementById("adminCard").classList.toggle("hidden");
@@ -37,8 +53,28 @@ document.getElementById("btnAbrirAdmin").addEventListener("click", () => {
 document.getElementById("btnPin").addEventListener("click", () => {
     if (document.getElementById("pinInput").value === PIN) {
         document.getElementById("adminForm").classList.remove("hidden");
+        document.getElementById("formCard").classList.add("hidden");
+        document.getElementById("waitingCard").classList.add("hidden");
+        mostrarParticipantes(); // ← agregar esta línea
     } else {
         alert("PIN incorrecto");
+    }
+});
+
+document.getElementById("btnCancelarAdmin").addEventListener("click", () => {
+    document.getElementById("adminCard").classList.add("hidden");
+    document.getElementById("adminForm").classList.add("hidden");
+    document.getElementById("pinInput").value = "";
+    if (localStorage.prode_ya_voto === "1") {
+        document.getElementById("waitingCard").classList.remove("hidden");
+    } else {
+        document.getElementById("formCard").classList.remove("hidden");
+    }
+});
+
+document.getElementById("pinInput").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        document.getElementById("btnPin").click();
     }
 });
 

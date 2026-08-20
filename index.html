@@ -107,7 +107,8 @@
         <button id="btnPin">Entrar</button>
       </div>
 
-      <div id="adminForm" class="hidden">
+      <div id="adminForm" class="hidden"><span></span>
+        <div id="listaParticipantes" class="participantes"></div>
         <label>Sexo</label>
         <div class="toggle-row" id="toggleSexoReal">
           <button type="button" class="toggle" data-sexo-real="Varón">👦 Varón</button>
@@ -127,6 +128,7 @@
         <input type="text" id="alturaReal" placeholder="49">
 
         <button class="primary" id="btnGuardarReal">Guardar y revelar</button>
+        <button id="btnCancelarAdmin" type="button" class="btn-secundario">Cancelar</button>
       </div>
     </section>
 
