@@ -1,4 +1,9 @@
 // js/prode.js
+// Truco para pruebas: entrar con ?reset=1 al final de la URL borra el "ya voté"
+if (new URLSearchParams(window.location.search).get("reset") === "1") {
+    localStorage.removeItem("prode_ya_voto");
+}
+
 import { db } from "./firebase-config.js";
 import {
     collection,
