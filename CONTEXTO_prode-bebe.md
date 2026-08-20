@@ -9,12 +9,12 @@ PWA/mini-app para que familia y amigos hagan predicciones sobre el nacimiento de
 - Imports de Firebase SIEMPRE con URL completa de gstatic (nunca estilo npm "firebase/app"), versión `10.12.2`
 - Proyecto Firebase: `bebe-2f40d`
 
-## Estado: las 3 piezas base están hechas
-- `index.html` → esqueleto de toda la UI: formulario de predicción, tarjeta de espera, tarjeta de revelación, panel admin. Sin lógica.
-- `css/styles.css` → paleta cálida (crema/terracota/salvia), variables en `:root` (`--bg`, `--card`, `--accent`, `--text-dim`, `--error`...), mismo criterio que cuentas-app.
+## Estado: las 3 piezas base están hechas + mejoras al panel admin
+- `index.html` → esqueleto de toda la UI: formulario de predicción, tarjeta de espera, tarjeta de revelación, panel admin. Panel admin (`adminForm`) ahora incluye `#listaParticipantes` (arriba de los campos de fecha/hora/etc.) y `#btnCancelarAdmin` (debajo de `btnGuardarReal`).
+- `css/styles.css` → paleta cálida (crema/terracota/salvia), variables en `:root` (`--bg`, `--card`, `--accent`, `--text-dim`, `--error`...), mismo criterio que cuentas-app. Clases nuevas: `.participantes` (tarjeta con `margin-top`/`margin-bottom` para separarla), `.lista-nombres` (chips/pastillas), `.btn-secundario` (botón cancelar, discreto, hover en `--error`).
 - `js/firebase-config.js` → conexión a Firestore. Exporta `db`.
 - `js/prode.js` → formulario de predicción: toggles (sexo/parecido/pelo), sliders (peso en kg, altura en cm), guarda en colección `predicciones` con `addDoc`, marca `localStorage.prode_ya_voto = "1"` para no votar dos veces desde el mismo dispositivo, muestra pantalla de espera.
-- `js/reveal.js` → panel admin con PIN (`const PIN = "1234"`, ya cambiado en producción por el usuario), guarda resultado real en `config/resultado` (doc único), calcula puntaje y muestra podio + ranking + apuestas graciosas. Incluye confetti al revelar.
+- `js/reveal.js` → panel admin con PIN (`const PIN = "1234"`, ya cambiado en producción por el usuario). Al poner el PIN bien: oculta `formCard` y `waitingCard`, muestra `adminForm` y carga `mostrarParticipantes()` (lista de nombres que ya votaron, sin mostrar qué votó cada uno — solo lee `predicciones`, no la modifica). Enter en el input del PIN dispara el mismo click que el botón "Entrar". Botón "Cancelar" (`btnCancelarAdmin`) oculta el panel admin y vuelve a mostrar `formCard` o `waitingCard` según si `localStorage.prode_ya_voto` está seteado. Guarda resultado real en `config/resultado` (doc único), calcula puntaje y muestra podio + ranking + apuestas graciosas. Incluye confetti al revelar.
 
 ## Estructura de datos en Firestore
 - Colección `predicciones` → un doc por persona: `{nombre, sexo, fecha, hora, peso, altura, parecido, pelo, creado}`
@@ -37,6 +37,8 @@ Abiertas a propósito (sin auth): `allow read, write: if true;` tanto en `predic
 - Nada se muestra a nadie (ni resultados parciales ni quién votó qué) hasta que se carga el resultado real — es la gracia del juego
 - Las apuestas "graciosas" (parecido, pelo) NO suman puntos, son solo para el resumen final
 - Un voto por dispositivo vía `localStorage`, no hay validación más estricta
+- Excepción a lo anterior: los papás (con PIN) SÍ pueden ver, antes de revelar, la **lista de nombres** de quiénes ya participaron — pero no qué votó cada uno
+- Al entrar al panel admin con el PIN correcto, el formulario de predicción/espera se oculta; hay botón "Cancelar" para volver atrás sin cargar el resultado real
 
 ## Truco de testing agregado
 En `js/prode.js`, entrar con `?reset=1` al final de la URL borra el `localStorage.prode_ya_voto` para poder volver a votar de prueba (útil en celular, donde no hay consola fácil). **Recordar sacar este bloque antes de que la app quede en manos de la familia**, para que nadie lo use para votar dos veces.
