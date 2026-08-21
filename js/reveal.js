@@ -161,10 +161,8 @@ async function mostrarRevelacion() {
     document.getElementById("funFacts").innerHTML = `
     <div class="stat-row"><span>¿A quién se parece más?</span><b>${mayoria("parecido")}</b></div>
     <div class="stat-row"><span>¿Mucho pelo?</span><b>${mayoria("pelo")}</b></div>
-    <div class="stat-row"><span>¿Color de pelo?</span><b>${mayoria("colorPelo")}</b></div>
     <div class="stat-row"><span>¿Lloró fuerte o bajito?</span><b>${mayoria("llanto")}</b></div>
-    <div class="stat-row"><span>¿Carácter de quién?</span><b>${mayoria("caracter")}</b></div>
-  `;
+    `;
 }
 
 // ===== Confetti =====

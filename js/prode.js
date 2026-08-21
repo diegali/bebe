@@ -15,7 +15,7 @@ import {
 let sexoElegido = null;
 let parecidoElegido = null;
 let peloElegido = null;
-let llantoElegido, colorPeloElegido, caracterElegido;
+let llantoElegido;
 
 // Conecta un grupo de botones .toggle para que se marque uno solo como activo
 function armarToggleGroup(contenedorId, datasetKey, onSelect) {
@@ -33,8 +33,6 @@ armarToggleGroup("toggleSexo", "sexo", v => sexoElegido = v);
 armarToggleGroup("toggleParecido", "parecido", v => parecidoElegido = v);
 armarToggleGroup("togglePelo", "pelo", v => peloElegido = v);
 armarToggleGroup("toggleLlanto", "llanto", v => llantoElegido = v);
-armarToggleGroup("toggleColorPelo", "colorpelo", v => colorPeloElegido = v);
-armarToggleGroup("toggleCaracter", "caracter", v => caracterElegido = v);
 
 // ===== Sliders: mostrar el valor elegido en vivo =====
 const pesoGuess = document.getElementById("pesoGuess");
@@ -79,8 +77,6 @@ document.getElementById("btnVotar").addEventListener("click", async () => {
         parecido: parecidoElegido,
         pelo: peloElegido,
         llanto: llantoElegido,
-        colorPelo: colorPeloElegido,
-        caracter: caracterElegido,
         creado: serverTimestamp()
     };
 
