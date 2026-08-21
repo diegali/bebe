@@ -31,18 +31,62 @@ function calcularPuntaje(pred, real) {
 
 async function mostrarParticipantes() {
     const snap = await getDocs(collection(db, "predicciones"));
-    const nombres = snap.docs.map(d => d.data().nombre);
+    const votos = snap.docs.map(d => d.data());
     const cont = document.getElementById("listaParticipantes");
-    if (!nombres.length) {
+    if (!votos.length) {
         cont.innerHTML = "<p class='muted'>Todavía no votó nadie.</p>";
         return;
     }
     cont.innerHTML = `
-    <p class="muted">${nombres.length} persona${nombres.length === 1 ? "" : "s"} ya predijeron:</p>
+    <p class="muted">${votos.length} persona${votos.length === 1 ? "" : "s"} ya predijeron:</p>
     <ul class="lista-nombres">
-      ${nombres.map(n => `<li>${n}</li>`).join("")}
+      ${votos.map(v => `<li>${v.nombre}</li>`).join("")}
     </ul>
+    <button type="button" class="btn-secundario" id="btnVerDetalle">Ver detalle</button>
   `;
+    document.getElementById("btnVerDetalle").addEventListener("click", () => mostrarDetalleVotos(votos));
+}
+
+function mostrarDetalleVotos(votos) {
+    const cont = document.getElementById("detalleVotos");
+    const btn = document.getElementById("btnVerDetalle");
+    const yaVisible = !cont.classList.contains("hidden");
+    if (yaVisible) {
+        cont.classList.add("hidden");
+        btn.textContent = "Ver detalle";
+        return;
+    }
+    cont.innerHTML = `
+    <div class="tabla-detalle-wrap">
+      <table class="tabla-detalle">
+        <thead>
+          <tr>
+            <th>Nombre</th><th>Sexo</th><th>Fecha</th><th>Hora</th>
+            <th>Peso</th><th>Altura</th><th>Parecido</th><th>Pelo</th>
+            <th>Llanto</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${votos.map(v => `
+            <tr>
+              <td>${v.nombre}</td>
+              <td>${v.sexo || "—"}</td>
+              <td>${v.fecha || "—"}</td>
+              <td>${v.hora || "—"}</td>
+              <td>${v.peso ?? "—"}</td>
+              <td>${v.altura ?? "—"}</td>
+              <td>${v.parecido || "—"}</td>
+              <td>${v.pelo || "—"}</td>
+              <td>${v.llanto || "—"}</td>
+           
+            </tr>
+          `).join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+    cont.classList.remove("hidden");
+    btn.textContent = "Ocultar detalle";
 }
 
 // ===== Panel admin: abrir / validar PIN =====

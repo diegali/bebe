@@ -461,3 +461,32 @@ button.primary:disabled {
 .puntaje-info strong {
     color: var(--accent);
 }
+
+.detalle-votos {
+    margin-top: 14px;
+}
+
+.tabla-detalle-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+}
+
+.tabla-detalle {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.tabla-detalle th,
+.tabla-detalle td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--card);
+}
+
+.tabla-detalle th {
+    background: var(--card);
+    color: var(--accent);
+}
