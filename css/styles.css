@@ -449,3 +449,15 @@ button.primary:disabled {
     border-color: var(--error);
     color: var(--error);
 }
+
+.puntaje-info {
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-dim);
+    text-align: center;
+}
+
+.puntaje-info strong {
+    color: var(--accent);
+}
