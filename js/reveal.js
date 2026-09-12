@@ -167,9 +167,9 @@ async function mostrarRevelacion() {
 
     document.getElementById("revealSexo").textContent =
         resultado.sexo === "Varón" ? "👦 ¡Es varón!" : "👧 ¡Es mujer!";
+    const [anio, mes, dia] = resultado.fecha.split("-");
     document.getElementById("revealDetalle").textContent =
-        `${new Date(resultado.fecha).toLocaleDateString("es-AR")} · ${resultado.hora}hs · ${resultado.peso}kg · ${resultado.altura}cm`;
-
+        `${dia}/${mes}/${anio} · ${resultado.hora}hs · ${resultado.peso}kg · ${resultado.altura}cm`;
     if (!votos.length) return;
 
     const scored = votos.map(v => ({ ...v, puntos: calcularPuntaje(v, resultado) }));
