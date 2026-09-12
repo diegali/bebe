@@ -13,12 +13,12 @@ function calcularPuntaje(pred, real) {
     if (pred.sexo === real.sexo) pts += 10;
 
     const diffDias = Math.abs(new Date(pred.fecha) - new Date(real.fecha)) / 86400000;
-    pts += Math.max(0, 20 * (1 - diffDias / 10));
+    pts += Math.max(0, 25 * (1 - diffDias / 4));
 
     const [ph, pm] = pred.hora.split(":").map(Number);
     const [rh, rm] = real.hora.split(":").map(Number);
     const diffHoras = Math.abs((ph * 60 + pm) - (rh * 60 + rm)) / 60;
-    pts += Math.max(0, 20 * (1 - diffHoras / 12));
+    pts += Math.max(0, 15 * (1 - diffHoras / 12));
 
     const diffPeso = Math.abs(pred.peso - real.peso);
     pts += Math.max(0, 20 * (1 - diffPeso / 0.5));
